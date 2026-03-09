@@ -64,4 +64,24 @@ describe('Branch API', () => {
         const response = await request(app).get('/branches/999');
         expect(response.status).toBe(404);
     });
+
+    it('should return 404 when updating a non-existing branch', async () => {
+        const updatedBranch = {
+            branchId: 999,
+            headquartersId: 1,
+            name: "Non-Existing Branch",
+            description: "Does not exist",
+            address: "999 Nowhere St",
+            contactPerson: "Nobody",
+            email: "nobody@octo.com",
+            phone: "555-9999"
+        };
+        const response = await request(app).put('/branches/999').send(updatedBranch);
+        expect(response.status).toBe(404);
+    });
+
+    it('should return 404 when deleting a non-existing branch', async () => {
+        const response = await request(app).delete('/branches/999');
+        expect(response.status).toBe(404);
+    });
 });
